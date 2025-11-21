@@ -16,10 +16,12 @@ export class ResearchCollectorSettingTab extends PluginSettingTab {
 
 		containerEl.createEl('h2', { text: 'Research Study Collector Settings' });
 
-		// Claude Code Path
+		// Claude Configuration
+		containerEl.createEl('h3', { text: 'Claude Configuration' });
+
 		new Setting(containerEl)
 			.setName('Claude Code CLI path')
-			.setDesc('Path to the Claude Code CLI executable (e.g., "claude" or "/usr/local/bin/claude")')
+			.setDesc('Path to the Claude Code CLI executable (desktop only, e.g., "claude" or "/usr/local/bin/claude")')
 			.addText(text => text
 				.setPlaceholder('claude')
 				.setValue(this.plugin.settings.claudeCodePath)
@@ -27,6 +29,20 @@ export class ResearchCollectorSettingTab extends PluginSettingTab {
 					this.plugin.settings.claudeCodePath = value;
 					await this.plugin.saveSettings();
 				}));
+
+		new Setting(containerEl)
+			.setName('Claude API key')
+			.setDesc('API key for Claude (required for mobile, optional for desktop). Get one at console.anthropic.com')
+			.addText(text => {
+				text
+					.setPlaceholder('sk-ant-api...')
+					.setValue(this.plugin.settings.claudeApiKey)
+					.onChange(async (value) => {
+						this.plugin.settings.claudeApiKey = value;
+						await this.plugin.saveSettings();
+					});
+				text.inputEl.type = 'password';
+			});
 
 		// Default Research Source
 		new Setting(containerEl)
@@ -58,8 +74,8 @@ export class ResearchCollectorSettingTab extends PluginSettingTab {
 					}
 				}));
 
-		// Semantic Scholar API Key
-		containerEl.createEl('h3', { text: 'API Configuration' });
+		// Research Database Configuration
+		containerEl.createEl('h3', { text: 'Research Database Configuration' });
 
 		new Setting(containerEl)
 			.setName('Semantic Scholar API key')

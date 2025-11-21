@@ -12,6 +12,7 @@ export interface ResearchStudy {
 
 export interface ResearchCollectorSettings {
 	claudeCodePath: string;
+	claudeApiKey: string;
 	defaultResearchSource: 'arxiv' | 'pubmed' | 'semantic-scholar' | 'all';
 	maxResults: number;
 	semanticScholarApiKey: string;
@@ -21,6 +22,7 @@ export interface ResearchCollectorSettings {
 
 export const DEFAULT_SETTINGS: ResearchCollectorSettings = {
 	claudeCodePath: 'claude',
+	claudeApiKey: '',
 	defaultResearchSource: 'arxiv',
 	maxResults: 10,
 	semanticScholarApiKey: '',

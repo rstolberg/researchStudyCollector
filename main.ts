@@ -1,8 +1,8 @@
-import { Plugin, Notice, WorkspaceLeaf, MarkdownView } from 'obsidian';
+import { Plugin, Notice, WorkspaceLeaf, MarkdownView, Platform } from 'obsidian';
 import { ResearchCollectorSettings, DEFAULT_SETTINGS } from './types';
 import { ResearchCollectorSettingTab } from './settings';
 import { ResearchResultsModal } from './researchModal';
-import { analyzeNoteWithClaude } from './claudeIntegration';
+import { analyzeNoteWithClaude, analyzeNoteWithClaudeAPI } from './claudeIntegration';
 import { searchAllSources } from './researchAPIs';
 
 export default class ResearchStudyCollector extends Plugin {
@@ -68,11 +68,27 @@ export default class ResearchStudyCollector extends Plugin {
 
 		try {
 			// Step 1: Analyze note with Claude
-			const analysis = await analyzeNoteWithClaude(
-				noteContent,
-				this.settings.claudeCodePath,
-				this.settings.promptTemplate
-			);
+			// Use API on mobile, CLI on desktop
+			let analysis;
+			if (Platform.isMobile) {
+				// Mobile: Use Claude API
+				if (!this.settings.claudeApiKey) {
+					new Notice('Claude API key not configured. Please add it in settings.');
+					return;
+				}
+				analysis = await analyzeNoteWithClaudeAPI(
+					noteContent,
+					this.settings.claudeApiKey,
+					this.settings.promptTemplate
+				);
+			} else {
+				// Desktop: Use Claude CLI
+				analysis = await analyzeNoteWithClaude(
+					noteContent,
+					this.settings.claudeCodePath,
+					this.settings.promptTemplate
+				);
+			}
 
 			new Notice(`Found ${analysis.queries.length} search queries. Searching research databases...`);
 
