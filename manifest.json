@@ -1,0 +1,10 @@
+{
+  "id": "research-study-collector",
+  "name": "Research Study Collector",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Collects and analyzes research studies based on your notes using Claude AI",
+  "author": "Riley Stolberg",
+  "authorUrl": "https://github.com/rstolberg/researchStudyCollector",
+  "isDesktopOnly": false
+}
