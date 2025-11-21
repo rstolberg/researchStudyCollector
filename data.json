@@ -1,0 +1,8 @@
+{
+  "claudeCodePath": "claude",
+  "defaultResearchSource": "all",
+  "maxResults": 10,
+  "semanticScholarApiKey": "",
+  "pubmedEmail": "",
+  "promptTemplate": "Based on the following note content, identify key research topics and suggest relevant search queries for finding related academic research:\n\n{NOTE_CONTENT}\n\nPlease provide:\n1. Main research topics (3-5 topics)\n2. Suggested search queries for each topic\n3. Any trends or connections you notice\n\nFormat your response as JSON with the structure:\n{\n  \"topics\": [\"topic1\", \"topic2\", ...],\n  \"queries\": [\"query1\", \"query2\", ...],\n  \"trends\": \"brief analysis\"\n}"
+}
